@@ -1,0 +1,85 @@
+body {
+    background-color: #ccd5ae;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    background-color: #e9edc9;
+    padding: 20px;
+    min-width: 200px;
+    border-right: 1px solid #ccc;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.chatbot-button {
+    list-style-type: none;
+    margin: 10px 0; /* Add spacing between chatbot items */
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.chatbot-button.active {
+    background-color: #e9edc9; /* Change background color when selected */
+    border-left: 3px solid #d4a373; /* Add a border to the selected chatbot button */
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#chatbox {
+    background-color: #faedcd;
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 30px); /* Adjust the max height to leave space for the input box */
+    /* Add the following styles to limit chatbox expansion */
+    min-height: 70px; /* Minimum height of chatbox */
+    transition: max-height 0.5s ease-in-out; /* Smoothly transition max-height */
+}
+
+#chat-input {
+    display: flex;
+    align-items: center;
+    background-color: #d4a373;
+    padding: 10px;
+    /* Add the following styles to push chatbox down when input box expands */
+    margin-top: auto;
+    z-index: 1;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 70px;
+    font-size: 16px;
+    width: 800px;
+    border: 1px solid #ddd; /* Add a border with radius */
+    border-radius: 100px; /* Border radius */
+}
+
+#send-button {
+    background-color: #fefae0;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}

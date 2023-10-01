@@ -1,0 +1,94 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize conversation history on the client side
+    const chatMessages = document.getElementById("chatbox");
+    const userInput = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
+    const chatForm = document.getElementById("chat-form");
+
+    // Store conversation history for different chatbots
+    const conversationHistory = {};
+
+    chatForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const userMessage = userInput.value.trim();
+        if (userMessage !== "") {
+            // Determine the selected chatbot
+            const selectedChatbot = document.querySelector(".chatbot-button.active").getAttribute("data-chatbot");
+
+            // Initialize conversation history for the selected chatbot
+            if (!conversationHistory[selectedChatbot]) {
+                conversationHistory[selectedChatbot] = [];
+            }
+
+            // Display user input
+            const userMessageDiv = document.createElement("div");
+            userMessageDiv.classList.add("message", "user-message");
+            userMessageDiv.innerHTML = `<div class="message-content">${userMessage}</div>`;
+            chatMessages.appendChild(userMessageDiv);
+
+            // Add user input to the conversation history
+            conversationHistory[selectedChatbot].push({ role: "user", content: userMessage });
+
+            // Clear user input
+            userInput.value = "";
+
+            // Send user message and selected chatbot to the server as JSON
+            fetch("/chat", {
+                method: "POST",
+                body: JSON.stringify({
+                    user_input: userMessage,
+                    selected_chatbot: selectedChatbot,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Display chatbot responses as separate paragraphs
+                    data.response.forEach((paragraph) => {
+                        const chatbotMessageDiv = document.createElement("div");
+                        chatbotMessageDiv.classList.add("message", "chatbot-message");
+                        chatbotMessageDiv.innerHTML = `<div class="message-content">${paragraph}</div>`;
+                        chatMessages.appendChild(chatbotMessageDiv);
+
+                        // Add chatbot responses to the conversation history
+                        conversationHistory[selectedChatbot].push({ role: "chatbot", content: paragraph });
+                    });
+
+                    // Scroll to the bottom of the chatbox to show the latest messages
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch((error) => {
+                    console.error("Error sending message:", error);
+                });
+        }
+    });
+
+    // Add event listeners to switch between chatbots
+    const chatbotButtons = document.querySelectorAll(".chatbot-button");
+    chatbotButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            // Remove the 'active' class from all chatbot buttons
+            chatbotButtons.forEach((btn) => {
+                btn.classList.remove("active");
+            });
+
+            // Add the 'active' class to the clicked chatbot button
+            this.classList.add("active");
+
+            // Clear the chatbox and load conversation history for the selected chatbot
+            chatMessages.innerHTML = "";
+            const selectedChatbot = this.getAttribute("data-chatbot");
+            if (conversationHistory[selectedChatbot]) {
+                conversationHistory[selectedChatbot].forEach((message) => {
+                    const messageDiv = document.createElement("div");
+                    messageDiv.classList.add("message", `${message.role}-message`);
+                    messageDiv.innerHTML = `<div class="message-content">${message.content}</div>`;
+                    chatMessages.appendChild(messageDiv);
+                });
+            }
+        });
+    });
+});

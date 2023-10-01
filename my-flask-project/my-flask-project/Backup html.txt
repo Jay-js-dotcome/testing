@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="sidebar">
+            <ul>
+                <li class="chatbot-button active" data-chatbot="chatbot1">Chatbot 1</li>
+                <li class="chatbot-button" data-chatbot="chatbot2">Chatbot 2</li>
+                <!-- Add more chatbot buttons as needed -->
+            </ul>
+        </div>
+        <div class="chat-container">
+            <div id="chatbox">
+                <!-- Chat conversation goes here -->
+            </div>
+            <div id="chat-input">
+                <form id="chat-form" action="/chat" method="POST">
+                    <input type="text" id="user-input" name="user_input" placeholder="Type your question...">
+                    <input type="hidden" id="selected-chatbot" name="selected_chatbot" value="chatbot1">
+                    <button type="submit" id="send-button">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

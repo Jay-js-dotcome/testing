@@ -1,0 +1,119 @@
+body {
+    background-color: #ccd5ae;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    background-color: #e9edc9;
+    padding: 20px;
+    min-width: 200px;
+    border-right: 1px solid #ccc;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.chatbot-button {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.chatbot-button.active {
+    background-color: #e9edc9;
+    border-left: 3px solid #d4a373;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#chatbox {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 30px);
+    min-height: 70px;
+    transition: max-height 0.5s ease-in-out;
+}
+
+#chat-input {
+    display: flex;
+    align-items: center;
+    background-color: #d4a373;
+    padding: 10px;
+    margin-top: auto;
+    z-index: 1;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 70px;
+    font-size: 16px;
+    width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 100px;
+}
+
+#send-button {
+    background-color: #25d366;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+.message {
+    background-color: #DCF8C6;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word; /* Allow long words to break and wrap */
+}
+
+.message.sender {
+    background-color: #E5E5EA;
+    text-align: right;
+}
+
+.message.user-message {
+    background-color: #59a174;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    max-width: 70%; /* Set a maximum width for the user message container */
+    display: inline-block; /* Make the container inline-block to adjust width */
+    float: right; /* Align user messages to the right */
+    clear: both; /* Ensure proper line breaking */
+}
+
+.message.chatbot-message {
+    background-color: #5a5a5a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    max-width: 70%; /* Set a maximum width for the chatbot message container */
+    display: inline-block; /* Make the container inline-block to adjust width */
+    float: left; /* Align chatbot messages to the left */
+    clear: both; /* Ensure proper line breaking */
+}
